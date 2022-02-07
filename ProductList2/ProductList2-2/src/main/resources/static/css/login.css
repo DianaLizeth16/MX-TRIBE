@@ -100,8 +100,7 @@ p{
 }
 
 .btn-category_item {
-    
-    float: rigth;
+    display: inline-block;
     background: #ff523b;
     color: #fff;
     padding: 8px 30px;
@@ -179,14 +178,11 @@ a:link, a:visited, a:active {
     min-width: 200px;
     margin-bottom: 50px;
     transition: transform 0.5s;
-    float:left;
 }
 
 .col-4 img{
     width: 100%;
-  	
 }
-
 
 .title{
     text-align: center;
@@ -437,8 +433,6 @@ select:focus{
 }
 
 .page-btn span:hover{
-	
-	
     background: #ff523b;
     color: #fff;
 }
@@ -828,45 +822,4 @@ form a{
 		width: 100%;
 		margin-left: 0px;
 	}
-}
-
-/*New cart properties*/
-.submenu{
-    position: relative;
-}
-
-.submenu #cart{
-    display: none;
-    z-index: 1;
-}
-
-.submenu:hover #cart{
-    display: block;
-    position: absolute;
-    right: 0;
-
-    top: 100%;
-    z-index: 1;
-    background-color: white;
-    padding: 20px;
-    min-height: 400px;
-    min-width: 300px;
-    cursor: pointer;
-}
-
-.delete-item{
-    background-color: red;
-    border-radius: 50%;
-    padding: 5px 10px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-.price::before{
-    content: '$';
-}
-
-#btn-apply-coupon:hover{
-    color: white;
 }

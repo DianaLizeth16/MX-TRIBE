@@ -16,11 +16,15 @@ public class ControllerProduct {
 
 	@Autowired
 	private IProductService productService; 
+	@Autowired
+	private ICouponService couponService; 
 	
 	@GetMapping("/product")  
 	public String product(Model model) {   
 		List<Product> products = (List<Product>) productService.listProduct();
 		model.addAttribute("products", products); 
+		List<Coupon> coupons = (List<Coupon>) couponService.listCoupon();
+		model.addAttribute("coupons", coupons);
 		return "product";
 	}
 	

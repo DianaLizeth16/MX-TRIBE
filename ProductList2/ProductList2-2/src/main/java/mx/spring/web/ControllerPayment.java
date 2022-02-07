@@ -13,5 +13,9 @@ public class ControllerPayment {
 	@GetMapping("/payment")  
 	public String payment(Model model) {   
 		return "payment";
+	}
+	@GetMapping("/paymentDone")  
+	public String paymentDone(Model model) {   
+		return "paymentDone";
 	}	
 }

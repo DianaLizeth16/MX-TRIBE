@@ -9,9 +9,12 @@
 <title>Admin</title>
 <link th:href="@{/css/style.css}" rel="stylesheet">
 <link th:href="@{/css/font/typicons.css}" rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/alerts.js}"></script>
+<link th:href="@{/css/sweetalert2.min.css}" rel="stylesheet">
 </head>
 
 <body>
+	
 	<div class="container-scroller">
 		<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 			<div
@@ -30,13 +33,13 @@
 						class="nav-link dropdown-toggle  pl-0 pr-0" href="#"
 						data-toggle="dropdown" id="profileDropdown"> <i 
 							class="typcn typcn-user-outline mr-0"></i> <span
-							class="nav-profile-name">Evan Morales</span>
+							class="nav-profile-name">Log Out</span>
 					</a>
 						<div class="dropdown-menu dropdown-menu-right navbar-dropdown"
 							aria-labelledby="profileDropdown">
 							<!-- Logout -->
-							<a class="dropdown-item"> <i
-								class="typcn typcn-power text-primary"></i> Logout
+							<a class="dropdown-item" href="adminLogin"> <i
+								class="typcn typcn-power text-primary" ></i> Logout
 							</a>
 						</div></li>
 				</ul>
@@ -84,20 +87,26 @@
 							class="typcn typcn-eye menu-icon"></i> <span class="menu-title">Promotional
 								Events</span>
 					</a></li>
-
-
+					
+					<li class="nav-item"><a class="nav-link"
+							th:href="@{/save_admin}" data-toggle="modal"
+							data-target="#addUser"> <i
+								class="typcn typcn-user-add menu-icon"></i> <span
+								class="menu-title">Add New Admin</span>
+						</a></li>
 				</ul>
 			</nav>
-			
+
+
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper">
 					<div class="row">
 						<div class="col-sm-6">
-							
+
 							<!-- Add button - modal: addcoupon -->
 							<div>
-								<button type="button" 
+								<button type="button"
 									class="btn btn-primary btn-rounded btn-icon"
 									data-toggle="modal" data-target="#addcoupon">
 									<i class="typcn typcn-plus"></i>
@@ -127,8 +136,10 @@
 															<th>Type</th>
 															<th>Prom Event</th>
 															<th>Categoty</th>
-															<th></th> <!-- edit buttom -->
-															<th></th> <!-- delete buttom -->
+															<th></th>
+															<!-- edit buttom -->
+															<th></th>
+															<!-- delete buttom -->
 														</tr>
 													</thead>
 													<!-- Iteration of coupons elements: ControllerCoupon -->
@@ -141,27 +152,29 @@
 															<td>[[${coupon.TYPE_COUPON}]]</td>
 															<td>[[${coupon.PROM_EVENT}]]</td>
 															<td>[[${coupon.COUPCATEGORY}]]</td>
-															
+
 															<!-- Edit - using "PathVariable" // Modal: editpromeve -->
 															<td><a th:href="@{/edit_co/} + ${coupon.COUPONS_ID}"
 																class="btn btn-outline-info btn-icon-text"
 																data-toggle="modal" data-target="#editcoupon"> <i
 																	class="typcn typcn-edit btn-icon-prepend"></i>Change
 															</a></td>
-															
+
 															<!-- Delete - using query parameter -->
-															<td><a th:href="@{/delete_co(coupon=${coupon.COUPONS_ID})}"
-																class="btn btn-outline-danger btn-icon-text"> <i
-																class="typcn typcn-delete btn-icon-prepend"></i>Delete
+															<td><a
+																th:href="@{/delete_co(coupon=${coupon.COUPONS_ID})}"
+																class="btn btn-outline-danger btn-icon-text"
+																id="deleteCoupon"> <i
+																	class="typcn typcn-delete btn-icon-prepend"></i>Delete
 															</a></td>
-															
+
 														</tr>
 													</tbody>
 												</table>
 											</div>
 											<div class="text-center p-2"
 												th:if="${coupons == null or coupons.empty}">
-												<span></span>  
+												<span></span>
 											</div>
 										</div>
 									</div>
@@ -176,7 +189,7 @@
 	</div>
 
 
-	<!-- Modal: addcoupon --> 
+	<!-- Modal: addcoupon -->
 	<div class="modal fade" id="addcoupon" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -187,40 +200,45 @@
 							<p class="card-description">New Coupon</p>
 							<!-- Object must be promEve -->
 							<form th:action="@{/save_co}" th:object="${coupon}" method="post">
-								
+
 								<!-- Field Name -->
 								<div class="form-group">
-									<label for="CO_NAME">Name</label> 
-									<input type="text" class="form-control" name="CO_NAME" placeholder="Name">
+									<label for="CO_NAME">Name</label> <input type="text"
+										class="form-control" name="CO_NAME" placeholder="Name">
 								</div>
-								
+
 								<!-- Field Discount -->
 								<div class="form-group">
-									<label for="CO_DISCOUNT" >Discount %</label>
-									<input type="number" class="form-control" name="CO_DISCOUNT"  placeholder="Discount">
+									<label for="CO_DISCOUNT">Discount %</label> <input
+										type="number" class="form-control" name="CO_DISCOUNT"
+										placeholder="Discount">
 								</div>
-								
+
 								<!-- Field Type -->
 								<div class="form-group">
-									<label for="TYPE_COUPON" >Type</label>
-									<input type="text" class="form-control" name="TYPE_COUPON"  placeholder="Type Coupon">
+									<label for="TYPE_COUPON">Type</label> <input type="text"
+										class="form-control" name="TYPE_COUPON"
+										placeholder="Type Coupon">
 								</div>
-								
+
 								<!-- Field Promotional Event -->
 								<div class="form-group">
-									<label for="PROM_EVENT" >Promotional Event</label>
-									<input type="number" class="form-control" name="PROM_EVENT"  placeholder="Prom Event">
+									<label for="PROM_EVENT">Promotional Event</label> <input
+										type="number" class="form-control" name="PROM_EVENT"
+										placeholder="Prom Event">
 								</div>
-								
+
 								<!-- Field Cat -->
 								<div class="form-group">
-									<label for="COUPCATEGORY" >Category</label>
-									<input type="number" class="form-control" name="COUPCATEGORY"  placeholder="Coupon Category">
+									<label for="COUPCATEGORY">Category</label> <input type="number"
+										class="form-control" name="COUPCATEGORY"
+										placeholder="Coupon Category">
 								</div>
-								
-								
+
+
 								<!-- Buttons Save or Cancel -->
-								<button type="submit" class="btn btn-primary mr-2">Save</button>
+								<button type="submit" class="btn btn-primary mr-2"
+									id="saveCoupon">Save</button>
 								<button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
 							</form>
 						</div>
@@ -239,9 +257,9 @@
 				<div class="col-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title" >Coupon</h4>
+							<h4 class="card-title">Coupon</h4>
 							<p class="card-description">Edit Coupon</p>
-							
+
 							<!-- Edit Form -->
 							<form th:action="@{/save_co}" th:object="${coupon}" method="post">
 								<input type="hidden" name="COUPONS_ID" id="COUPONS_ID">
@@ -252,31 +270,32 @@
 
 								<!-- Field Name  -->
 								<div class="form-group">
-									<label for="CO_NAME">Name</label> 
-									<input type="text" class="form-control" name="CO_NAME" id="CO_NAME" value="">
+									<label for="CO_NAME">Name</label> <input type="text"
+										class="form-control" name="CO_NAME" id="CO_NAME" value="">
 									<!--
                                     <input type="text" class="form-control" name="CO_NAME" th:field="*{CO_NAME}">
                                     -->
 								</div>
 								<!-- Field Discount -->
 								<div class="form-group">
-									<label for="CO_DISCOUNT" >Discount</label>
-									<input type="text" class="form-control" name="CO_DISCOUNT" id="CO_DISCOUNT">
+									<label for="CO_DISCOUNT">Discount</label> <input type="text"
+										class="form-control" name="CO_DISCOUNT" id="CO_DISCOUNT">
 								</div>
 								<!-- Field Type -->
 								<div class="form-group">
-									<label for="TYPE_COUPON">Type</label>
-									<input type="text" class="form-control" name="TYPE_COUPON" id="TYPE_COUPON">
+									<label for="TYPE_COUPON">Type</label> <input type="text"
+										class="form-control" name="TYPE_COUPON" id="TYPE_COUPON">
 								</div>
 								<!-- Field Prom Eve -->
 								<div class="form-group">
-									<label for="PROM_EVENT" >Promotional Event</label>
-									<input type="text" class="form-control" name="PROM_EVENT" id="PROM_EVENT">
+									<label for="PROM_EVENT">Promotional Event</label> <input
+										type="text" class="form-control" name="PROM_EVENT"
+										id="PROM_EVENT">
 								</div>
 								<!-- Field Category-->
 								<div class="form-group">
-									<label for="COUPCATEGORY">Category</label>
-									<input type="text" class="form-control" name="COUPCATEGORY" id="COUPCATEGORY">
+									<label for="COUPCATEGORY">Category</label> <input type="text"
+										class="form-control" name="COUPCATEGORY" id="COUPCATEGORY">
 								</div>
 								<!-- Buttons Save or Cancel -->
 								<button type="submit" class="btn btn-primary mr-2">Save</button>
@@ -289,6 +308,56 @@
 		</div>
 	</div>
 	<!-- Modal: editcoupon -->
+	<!-- Modal: addUser --> 
+	<div class="modal fade" id="addUser" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="col-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">add</h4>
+							<p class="card-description">New Admin User</p>
+							
+							<!-- Object must be product -->
+							<form th:action="@{/save_admin}" th:object="${user}" method="post">
+								
+								<!-- Name -->
+								<div class="form-group">
+									<label for="user_name" >Username</label> 
+									<input type="text" class="form-control" name="USER_NAME" placeholder="Username">
+								</div>
+								
+								<!-- Password -->
+								<div class="form-group">
+									<label for="user_password">Password</label> 
+									<input type="password" class="form-control" name="USER_PASSWORD" placeholder="Password">
+								</div>
+								
+								<!-- Repeat Password -->
+								<div class="form-group">
+									<label >Confirm Password</label> 
+									<input type="password" class="form-control" placeholder="Confirm Password">
+								</div>
+								
+								
+								<!-- Mail -->
+								<div class="form-group">
+									<label for="user_email">Email</label>
+									<input type="email" class="form-control" name="USER_EMAIL"  placeholder="Email">
+								</div>
+								
+								<!-- Buttons Save or Cancel -->
+								<button type="submit" class="btn btn-primary mr-2" >Save</button>
+								<button type="button" class="btn btn-light" data-dismiss="modal" >Cancel</button>
+									
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal: addProduct -->
 
 	<script type="text/javascript" th:src="@{/js/vendor.bundle.base.js}"></script>
 	<script type="text/javascript" th:src="@{/js/settings.js}"></script>

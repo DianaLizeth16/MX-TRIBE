@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+xmlns="http://www.w3.org/1999/xhtml"
+>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Products - RedStore | Ecommerce Website</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -53,17 +55,18 @@
                             <hr id="Indicator">
                         </div>
 
-                        <form id="LoginForm">
+                        <form id="LoginForm" action="login" method="post"> 
                             <input type="text" placeholder="Username">
                             <input type="password" placeholder="Password">
                             <button type="submit" class="btn-acc">Login</button>
+                            <br>
                             <a href="">Forgot password?</a>
                         </form>
 
-                        <form id="RegForm">
-                            <input type="text" placeholder="Username">
-                            <input type="email" placeholder="Email">
-                            <input type="password" placeholder="Password">
+                        <form id="RegForm" th:action="@{/save_user}" th:object="${user}" method="post">
+                            <input type="text" name="USER_NAME" placeholder="Username">
+                            <input type="email" name="USER_EMAIL"placeholder="Email">
+                            <input type="password" name="USER_PASSWORD" placeholder="Password">
                             <button type="submit" class="btn-acc">Register</button>
                         </form>
                     </div>
